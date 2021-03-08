@@ -11,7 +11,7 @@ services:
             MYSQL_DATABASE: symfony
             MYSQL_USER: symfony
             MYSQL_PASSWORD: symfony
-
+            
     php:
         container_name: php-fpm
         build:
@@ -25,6 +25,11 @@ services:
             - ./logs/symfony:/var/www/symfony/var/log:cached
         depends_on: 
             - db
+        environment:
+            - DB_HOST=db
+            - DB_DATABASE=symfony
+            - DB_USERNAME=root
+            - DB_PASSWORD=root
 
     nginx:
         container_name: nginx

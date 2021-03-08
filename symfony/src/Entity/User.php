@@ -1,15 +1,31 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Dto\UserInput;
+use App\Dto\UserOutput;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`user`")
+ *
+ * @ApiResource(
+ *     collectionOperations={
+ *         "create"={
+ *             "method"="POST",
+ *             "input"=UserInput::class,
+ *             "output"=UserOutput::class
+ *         }
+ *     },
+ *     itemOperations={
+ *          "get"
+ *     }
+ * )
  */
-class User
+final class User
 {
     /**
      * @ORM\Id
@@ -28,7 +44,7 @@ class User
         return $this->id;
     }
 
-    public function getTel(): ?string
+    public function getTel(): string
     {
         return $this->tel;
     }
